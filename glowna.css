@@ -1,0 +1,56 @@
+body
+{
+	background-color: orange !important;
+	align: center;
+}
+h1
+{
+	text-align: center;
+}
+a
+{
+	display: inline-block;
+	font-size: 26px;
+	text-align: right;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+#formu1
+{
+	flex-direction: column;
+	display: flex;
+	justify-content:center;
+	margin-bottom: 100px;
+	align-items: center;
+	
+	
+	
+}
+
+#formu2
+{
+	flex-direction: column;
+	display: flex;
+	justify-content:center;
+	margin-bottom: 100px;
+	align-items: center;
+	
+}
+table
+{	
+	flex-direction: column;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+}
+form
+{
+	visibility:hidden;
+}
+label
+{
+	
+}
+
+
+

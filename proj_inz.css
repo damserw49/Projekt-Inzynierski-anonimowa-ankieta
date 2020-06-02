@@ -1,0 +1,39 @@
+body
+{
+	background-color: orange;
+}
+h1
+{
+	text-align: center;
+}
+a
+{
+	font-size: 26px;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+#contener
+{
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	flex-direction: column;
+}
+#form1
+{
+	flex-direction: column;
+	display: flex;
+	justify-content:center;
+	margin-bottom: 100px;
+	align-items: center;
+	
+	
+	
+}
+hr
+{
+	width:200%;
+	height: 150%; 
+	
+}
