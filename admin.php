@@ -20,7 +20,7 @@ if ( isset( $_SESSION['username'] ) ) {
 ?>
 <!DOCTYPE html>
 
-<html>
+<html lang="pl">
 <head>
 <meta charset="utf-8">
 <title>anonimowa ankieta</title>
@@ -37,7 +37,7 @@ if ( isset( $_SESSION['username'] ) ) {
 <h1 style="text-align:center; margin-top:20px;">witaj: <?php echo $_SESSION['username'] ?></h1>
 <a style="text-align: center;" href="logout.php">wyloguj</a>
 
-</br>
+<br>
 <div id="formu1">
 <input type="button" onClick="formularz();" value="Pokaz ankiety"/>
 <script>
@@ -50,7 +50,7 @@ function formularz() {
   }
 }
 </script>
-</br>
+<br>
 <div id="formu" style="visibility:hidden">
 <?php
 
@@ -81,7 +81,7 @@ if(mysqli_num_rows($wynik) > 0) {
     echo "</table>";
 }
 ?>
-</br>
+<br>
 <a>Ilość osób bez wypełnionych ankiet: 
 <?php
 $wynik = mysqli_query($connection,"SELECT (COUNT(loginy.login)-1)-(SELECT COUNT(DISTINCT user_name) FROM ankieta) FROM loginy")
@@ -90,5 +90,7 @@ $count = mysqli_fetch_assoc($wynik);
 echo $count['(COUNT(loginy.login)-1)-(SELECT COUNT(DISTINCT user_name) FROM ankieta)'];
 ?>
 </a>
+</div>
+</div>
 </body>
 </html>
