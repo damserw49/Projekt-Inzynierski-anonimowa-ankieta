@@ -1,7 +1,6 @@
 body
 {
 	background-color: orange !important;
-	align: center;
 }
 h1
 {
@@ -47,9 +46,10 @@ form
 {
 	visibility:hidden;
 }
-label
+table
 {
-	
+	border: 1px;
+	padding: 2px;
 }
 
 
