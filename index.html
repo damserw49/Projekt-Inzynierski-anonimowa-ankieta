@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
 <meta charset="utf-8">
 <title>anonimowa ankieta</title>
@@ -12,47 +12,44 @@
 
 </head>
 <body>
-</br>
+<br>
 <h1>Witaj w anonimowej ankiecie</h1>
 <hr style="height:5px;width:200%;">
 
-</br>
+<br>
 <div id="contener">
 <a>Zaloguj sie</a>
 <div id="form1">
 <form id="login-form" method="post" action="authen_login.php" >
-        <table border="0.5" >
+        <table>
             <tr>
                 <td><label for="userid">User Name</label></td>
                 <td><input type="text" name="userid" id="userid" required></td>
             </tr>
             <tr>
                 <td><label for="pwd">Password</label></td>
-                <td><input type="password" name="pwd" id="pwd" required></input></td>
+                <td><input type="password" name="pwd" id="pwd" required></td>
             </tr>
 			
-            <tr>
-				
-                <td><input type="submit" value="Zaloguj" />
-                
-				
-            </tr>
+            <tr>				
+                <td><input type="submit" value="Zaloguj"></td>
+			</tr>
         </table>
     </form>
 	</div>
-</br>
+<br>
 <a>Zarejestruj sie</a>
-</br>
+<br>
 <div id="form2">
 <form id="reg-form" method="post" action="authen_reg.php" >
-        <table border="0.5" >
+        <table>
             <tr>
                 <td><label for="userid">User Name</label></td>
-                <td><input type="text" name="userid" id="userid" required></td>
+                <td><input type="text" name="userid" id="userid1" required></td>
             </tr>
             <tr>
                 <td><label for="pwd">Password</label></td>
-                <td><input type="password" name="pwd" id="pwd" required></input></td>
+                <td><input type="password" name="pwd" id="pwd1" required></td>
             </tr>
 			<tr>
                 <td><label for="userid">Imie</label></td>
@@ -62,12 +59,9 @@
                 <td><label for="userid">Nazwisko</label></td>
                 <td><input type="text" name="surname" id="surname" required></td>
             </tr>
-            <tr>
-				
-                <td><input type="submit" value="Zarejestruj" />
-                
-				
-            </tr>
+            <tr>				
+                <td><input type="submit" value="Zarejestruj"></td>
+			</tr>
         </table>
     </form>
 </div>
