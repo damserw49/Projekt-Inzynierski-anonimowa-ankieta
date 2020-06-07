@@ -20,7 +20,7 @@ if ( isset( $_SESSION['username'] ) ) {
 ?>
 <!DOCTYPE html>
 
-<html>
+<html lang="pl">
 <head>
 <meta charset="utf-8">
 <title>anonimowa ankieta</title>
@@ -36,8 +36,8 @@ if ( isset( $_SESSION['username'] ) ) {
 <body style="background-color: orange;">
 <h1 style="text-align:center; margin-top:20px;">witaj <?php echo $_SESSION['username'] ?></h1>
 <a style="text-align: center;" href="logout.php">wyloguj</a>
-</br>
-</br>
+<br>
+<br>
 <div id="formu1">
 <input type="button" onClick="formularz();" value="Wypełnij ankiete"/>
 <script>
@@ -50,7 +50,7 @@ function formularz() {
   }
 }
 </script>
-</br>
+<br>
 <form id="formu" method="POST" action="formularz.php" style="visibility: hidden;">
 <hr>
 <label><b>Wybierz przedmiot:</b></label><br>
@@ -62,7 +62,7 @@ while ($temp = mysqli_fetch_assoc($query)){
 }
 echo "</select>";
 ?>
-</br>
+<br>
 <label><b>Wybierz prowadzacego:</b></label><br>
 <?php
 $query = mysqli_query($connection,"SELECT id,imie,nazwisko FROM wykladowcy");
@@ -72,13 +72,13 @@ while ($temp = mysqli_fetch_assoc($query)){
 }
 echo "</select>";
 ?>
-</br>
+<br>
 <label><b>forma zajęć:</b></label><br>
 <select id="zajecia" name="zajecia">
 	<option value="Wykład">Wykład</option>
 	<option value="Laboratorium">Laboratorium</option>
 </select>
-</br>
+<br>
 <label><b>ocena:</b></label><br>
 <select id="ocena" name="ocena">
 	<option value="1">1</option>
@@ -88,13 +88,13 @@ echo "</select>";
 	<option value="5">5</option>
 	<option value="6">6</option>
 </select>
-</br>
-</br>
+<br>
+<br>
 <input type="submit" value="Wyslij ankiete"/>
 </form>
 <hr>
 </div>
-</br>
+<br>
 
 <div id="formu2">
 <input type="button" onClick="formularz2();" value="Pokaz ankiety"/>
@@ -110,7 +110,7 @@ function formularz2() {
   }
 }
 </script>
-</br>
+<br>
 <div id="formul" style="visibility:hidden">
 <a>Wypelnione formularze z przedmiotow: </a>
 <?php
@@ -131,7 +131,7 @@ if(mysqli_num_rows($wynik) > 0) {
     echo "</table>";
 }
 else{
-	echo "</br>";
+	echo "<br>";
 	echo "<a>Brak ankiet do wyswietlenia.</a>";
 }
 
@@ -148,19 +148,19 @@ $string .= $_SESSION['username'];
 
 if(sha1($string)==$count['hash'])
 {
-	echo "</br>";
+	echo "<br>";
 	echo "twoja ankieta jest poprawnie zapisana!";
-	echo "</br>";
+	echo "<br>";
 }
 else
 {
 	echo "Blad w ankiecie!";
-	echo "</br>";
+	echo "<br>";
 }
 }
 
 ?>
 </div>
-
+</div>
 </body>
 </html>
