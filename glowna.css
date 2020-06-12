@@ -42,15 +42,13 @@ table
 	align-items: center;
 	justify-content:center;
 }
-form
-{
-	visibility:hidden;
-}
 table
 {
 	border: 1px;
 	padding: 2px;
 }
-
+input[type=text] {
+   width: 400px;
+}
 
 
