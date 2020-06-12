@@ -38,8 +38,35 @@ if ( isset( $_SESSION['username'] ) ) {
 <a style="text-align: center;" href="logout.php">wyloguj</a>
 
 <br>
+
+<div id="formu2">
+<input type="button" onClick="formularz2();" value="Stwórz ankietę"/>
+<script>
+function formularz2() {
+  var x = document.getElementById("formul");
+  if (x.style.visibility === "hidden") {
+    x.style.visibility = "visible";
+  } else {
+    x.style.visibility = "hidden";
+  }
+}
+</script>
+<br>
+<div id="formul" style="visibility:hidden">
+
+<form id="add" method="POST" action="new_ankieta.php">
+	<label>Wpisz nazwę ankiety: </label>
+	<input type="text" name="addankieta" id="addankieta">
+	<input type="submit" value="Dodaj">
+</form>
+</div>
+<br>
+
+
+</div>
+
 <div id="formu1">
-<input type="button" onClick="formularz();" value="Pokaz ankiety"/>
+<input type="button" onClick="formularz();" value="Pokaż ankiety"/>
 <script>
 function formularz() {
   var x = document.getElementById("formu");
@@ -52,9 +79,29 @@ function formularz() {
 </script>
 <br>
 <div id="formu" style="visibility:hidden">
+<form id="ankietacheck">
+	<label><b>Wybierz ankietę:</b></label><br>
 <?php
+$query = mysqli_query($connection,"SELECT ankieta FROM nazwa_ankieta");
+echo "<select id='ankieta' name='ankieta'>";
+while ($temp = mysqli_fetch_assoc($query)){
+    echo "<option value='".$temp['ankieta']."'>".$temp['ankieta']."</option>";
+}
+echo "</select>";
+?>
+	<br>
+	<br>
+	<input type="submit" value="Sprawdź">
+</form>
 
-$wynik = mysqli_query($connection,"SELECT * FROM ankieta")
+<?php
+error_reporting(0);
+if($_GET['ankieta'])
+{
+$ankietacheck="";
+$ankietacheck=$_GET['ankieta'];
+
+$wynik = mysqli_query($connection,"SELECT * FROM ".$ankietacheck."")
 or die('Błąd zapytania');
 
 if(mysqli_num_rows($wynik) > 0) {
@@ -63,10 +110,10 @@ if(mysqli_num_rows($wynik) > 0) {
 	echo "<tr>";
 		echo "<th>ID</th>";
 		echo "<th>przedmiot</th>";
-		echo "<th>prowadzacy</th>";
-		echo "<th>forma_zajec</th>";
+		echo "<th>prowadzący</th>";
+		echo "<th>forma zajęc</th>";
 		echo "<th>ocena</th>";
-		echo "<th>user_name</th>";
+		echo "<th>użytkownik</th>";
 		echo "</tr>";
     while($r = mysqli_fetch_assoc($wynik)) {
 		echo "<tr>";
@@ -80,17 +127,19 @@ if(mysqli_num_rows($wynik) > 0) {
     }
     echo "</table>";
 }
+}
 ?>
 <br>
 <a>Ilość osób bez wypełnionych ankiet: 
 <?php
-$wynik = mysqli_query($connection,"SELECT (COUNT(loginy.login)-1)-(SELECT COUNT(DISTINCT user_name) FROM ankieta) FROM loginy")
-or die('Błąd zapytania');
+$wynik = mysqli_query($connection,"SELECT (COUNT(loginy.login)-1)-(SELECT COUNT(DISTINCT user_name) FROM ".$ankietacheck.") FROM loginy")
+or die('Nie wybrano ankiety!');
 $count = mysqli_fetch_assoc($wynik);
-echo $count['(COUNT(loginy.login)-1)-(SELECT COUNT(DISTINCT user_name) FROM ankieta)'];
+echo $count['(COUNT(loginy.login)-1)-(SELECT COUNT(DISTINCT user_name) FROM '.$ankietacheck.')'];
 ?>
 </a>
 </div>
 </div>
+
 </body>
 </html>
