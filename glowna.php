@@ -39,7 +39,7 @@ if ( isset( $_SESSION['username'] ) ) {
 <br>
 <br>
 <div id="formu1">
-<input type="button" onClick="formularz();" value="Wypełnij ankiete"/>
+<input type="button" onClick="formularz();" value="Wypełnij ankietę"/>
 <script>
 function formularz() {
   var x = document.getElementById("formu");
@@ -53,6 +53,18 @@ function formularz() {
 <br>
 <form id="formu" method="POST" action="formularz.php" style="visibility: hidden;">
 <hr>
+
+<label><b>Wybierz ankietę:</b></label><br>
+<?php
+$query = mysqli_query($connection,"SELECT ankieta FROM nazwa_ankieta");
+echo "<select id='ankieta' name='ankieta'>";
+while ($temp = mysqli_fetch_assoc($query)){
+    echo "<option value='".$temp['ankieta']."'>".$temp['ankieta']."</option>";
+}
+echo "</select>";
+?>
+<br>
+
 <label><b>Wybierz przedmiot:</b></label><br>
 <?php
 $query = mysqli_query($connection,"SELECT id,nazwa FROM przedmioty");
@@ -63,7 +75,7 @@ while ($temp = mysqli_fetch_assoc($query)){
 echo "</select>";
 ?>
 <br>
-<label><b>Wybierz prowadzacego:</b></label><br>
+<label><b>Wybierz prowadzącego:</b></label><br>
 <?php
 $query = mysqli_query($connection,"SELECT id,imie,nazwisko FROM wykladowcy");
 echo "<select id='prowadzacy' name='prowadzacy'>";
@@ -90,14 +102,14 @@ echo "</select>";
 </select>
 <br>
 <br>
-<input type="submit" value="Wyslij ankiete"/>
+<input type="submit" value="Wyślij ankietę"/>
 </form>
 <hr>
 </div>
 <br>
 
 <div id="formu2">
-<input type="button" onClick="formularz2();" value="Pokaz ankiety"/>
+<input type="button" onClick="formularz2();" value="Pokaż ankiety"/>
 <script>
 function formularz2() {
   if(document.getElementById("formul").style.visibility == "hidden")
@@ -106,13 +118,13 @@ function formularz2() {
   }
   else if(document.getElementById("formul").style.visibility == "visible")
   {
-  document.getElementById("formul").style.visibility = "hidden";
+	document.getElementById("formul").style.visibility = "hidden";
   }
 }
 </script>
 <br>
 <div id="formul" style="visibility:hidden">
-<a>Wypelnione formularze z przedmiotow: </a>
+<a>Wypełnione formularze z przedmiotów: </a>
 <?php
 $wynik = mysqli_query($connection,"SELECT przedmiot FROM ankieta WHERE user_name=SHA1('".$_SESSION['username']."')")
 or die('Błąd zapytania');
@@ -132,10 +144,40 @@ if(mysqli_num_rows($wynik) > 0) {
 }
 else{
 	echo "<br>";
-	echo "<a>Brak ankiet do wyswietlenia.</a>";
+	echo "<a>Brak ankiet do wyświetlenia.</a>";
 }
 
-$wynik2 = mysqli_query($connection,"SELECT * FROM ankieta WHERE user_name=SHA1('".$_SESSION['username']."')")
+echo "<br>";
+?>
+<form id="hashcheck">
+	<label>Sprawdź poprawność przesłanej ankiety!</label>
+	<br>
+	<label>Wpisz hash wyników twojej ankiety: </label>
+	<input type="text" name="hashtext" id="hashtext">
+	<br>
+	<label><b>Wybierz ankietę:</b></label><br>
+<?php
+$query = mysqli_query($connection,"SELECT ankieta FROM nazwa_ankieta");
+echo "<select id='ankieta1' name='ankieta1'>";
+while ($temp = mysqli_fetch_assoc($query)){
+    echo "<option value='".$temp['ankieta']."'>".$temp['ankieta']."</option>";
+}
+echo "</select>";
+?>
+	<br>
+	<br>
+	<input type="submit" value="Sprawdź">
+</form>
+</div>
+<?php
+error_reporting(0);
+if($_GET['hashtext'])
+{
+$hashtext="";
+$hashtext=$_GET['hashtext'];
+$hashtable=$_GET['ankieta1'];
+
+$wynik2 = mysqli_query($connection,"SELECT * FROM ".$hashtable." WHERE user_name=SHA1('".$_SESSION['username']."')")
 or die('Błąd zapytania');
 $count = mysqli_fetch_assoc($wynik2);
 if(mysqli_num_rows($wynik) > 0){
@@ -145,22 +187,52 @@ $string .= $count['prowadzacy'];
 $string .= $count['forma_zajec'];
 $string .= $count['ocena'];
 $string .= $_SESSION['username'];
-
+$string .= $_SESSION['password'];
+if($hashtext==$count['hash'])
+{
 if(sha1($string)==$count['hash'])
 {
 	echo "<br>";
-	echo "twoja ankieta jest poprawnie zapisana!";
+	echo "Twoja ankieta jest poprawnie zapisana!";
+	unset($hashtext);
+	unset($hashtable);
 	echo "<br>";
 }
 else
 {
-	echo "Blad w ankiecie!";
+	echo "Twój hash: ";
+	echo "<br>";
+	echo $hashtext;
+	echo "<br>";
+	echo "Hash wyników: ";
+	echo "<br>";
+	echo sha1($string);
+	echo "<br>";
+	echo "Blad w ankiecie! Dane zostały zmienione!";
+	unset($hashtext);
+	unset($hashtable);
 	echo "<br>";
 }
 }
-
+else
+{
+	echo "Twój hash: ";
+	echo "<br>";
+	echo $hashtext;
+	echo "<br>";
+	echo "Hash z bazy: ";
+	echo "<br>";
+	echo  $count['hash'];
+	echo "<br>";
+	echo "Blad w ankiecie! Hash nie zgadza się z zapisanym w bazie";
+	unset($hashtext);
+	unset($hashtable);
+	echo "<br>";
+}
+}
+}
 ?>
-</div>
+
 </div>
 </body>
 </html>
